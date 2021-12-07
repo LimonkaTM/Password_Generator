@@ -1,0 +1,131 @@
+.modal-settings {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  // display: none;
+  margin: auto;
+  max-width: 30%;
+  min-width: 330px;
+  opacity: 1;
+  visibility: visible;
+  transition: .5s opacity, .5s visibility ease-in-out;
+
+  
+
+  *:focus,
+  *:active{
+    outline-color: #719eff;
+  }
+
+  .modal-settings-wrapper {
+    position: relative;
+    top: 50%;
+    bottom: 50%;
+    transform: translateY(-50%);
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, .14);
+    border-radius: 12px;
+
+    .modal-settings-wrapper__btn-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      background-color: transparent;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+  }
+
+  .content-wrpper__title {
+    margin-top: 0;
+    padding-right: 40px;
+  }
+  .block-attributes {
+    font-size: 1.3em;
+  }
+  .attribute {
+    margin-bottom: 15px;
+
+    &:nth-child(2) .attribute__sub-title {
+      margin-bottom: 10px;
+    }
+    &:last-child {
+      display: flex;
+      align-items: center;
+    }
+    &:last-child .checkbox-repeat-symbols {
+      height: 1em;
+      width: 1em;
+      cursor: pointer;
+    }
+  }
+  .attribute__sub-title {
+    margin: 0;
+  }
+  .attribute__sub-title_inline {
+    display: inline;
+    margin-right: 10px;
+  }
+  .block-attributes__input-password-length {
+    max-width: 55px;
+    border: 2px solid #c8c8c8a6;
+    border-radius: 5px;
+    padding: 1px 4px;
+    padding-right: 0;
+
+    &:focus,
+    &:active {
+      outline-color: #719eff;
+    }
+  }
+
+  .symbols-settings{
+    display: flex;
+    align-items: center;
+    
+    .symbols {
+      display: inline;
+      flex-grow: 1;
+      padding: 7px;
+      margin: 0 10px;
+      text-align: center;
+      border-radius: 10px;
+      background-color: #0000000f;
+      cursor: pointer;
+      transition: all 1s;
+  
+      &:hover {
+        background-color: #00000028;
+        transition: all .8s ease-out;
+      }
+    }
+
+    .symbols-settings__upper-case-letters_active,
+    .symbols-settings__lower-case-etters_active,
+    .symbols-settings__numbers_active,
+    .symbols-settings__special-symbols_active,
+    .modal-settings-wrapper__btn-close{
+      background-color: #719eff;
+
+      &:hover {
+        background-color: #4a83ff;
+      }
+    }
+  }
+
+  .modal-settings-wrapper__btn-close:hover {
+    color: #ff5d5d;
+  }
+}
+
+.modal-settings__transparent {
+  opacity: 0; 
+  visibility: hidden;
+}

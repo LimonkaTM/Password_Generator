@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Удобынй генератор паролей с тонкой настройкой генерации">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/normalize.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://kit.fontawesome.com/5dd1e3ae00.js" crossorigin="anonymous" defer></script>
+</head>
+<body>
+  <main class="main">
+    <h1 class="main__title">Password Generator</h1>
+    <form class="form" action="#" method="#">
+      <div class="form__wrapper-shadow">
+        <button class="btn form__btn-settings" name="btn-settings" data-title="Настройки" aria-label="Открыть окно настройки генерации пароля">
+          <i class="icon fas fa-cog"></i>
+        </button>
+        <input class="form__input" type="text" name="input-password" maxlength="32">
+        <div class="btn-block">
+          <button class="btn form__btn-clear-input" name="btn-clear-input" data-title="Очистить" aria-label="Очистить поле">
+            <i class="icon fas fa-times"></i>
+          </button>
+          <button class="btn form__btn-copy" name="btn-copy" data-title="Скопировать" aria-label="Скопировать пароль">
+            <i class="icon far fa-copy"></i>
+          </button>
+          <button class="btn form__btn-generagte" name="btn-generagte" data-title="Сгенерировать" aria-label="Сгенерировать пароль">
+            <i class="icon fas fa-key"></i>
+          </button>
+        </div>
+        <!-- /.btn-block -->  
+      </div>
+      <!-- /.form__wrapper_shadow -->
+    </form>
+    <!-- /.form -->
+  </main>
+  <!-- /.main -->
+
+  <section class="modal-settings modal-settings__transparent">
+    <div class="modal-settings-wrapper">
+      <button class="modal-settings-wrapper__btn-close" name="btn-close" aria-label="Закрыть окно настройки генерации пароля">
+        <i class="far fa-window-close"></i>
+      </button>
+      <div class="content-wrapper">
+        <h2 class="content-wrpper__title">Настройки генерации пароля</h2>
+        <div class="block-attributes">
+          <div class="attribute">
+            <p class="attribute__sub-title attribute__sub-title_inline">Длинна пароля:</p>
+            <input class="block-attributes__input-password-length" type="number" value="12" min="1" max="32" maxlength="2" name="input-password-length" aria-label="Длинна пароля">
+          </div>
+          <div class="attribute">
+            <p class="attribute__sub-title">Набор символов:</p>
+            <div class="symbols-settings">
+              <div class="symbols symbols-settings__upper-case-letters symbols-settings__upper-case-letters_active" aria-label="Латинские заглавные буквы" tabindex="0">A..Z</div>
+              <div class="symbols symbols-settings__lower-case-etters symbols-settings__lower-case-etters_active" aria-label="Латинские прописные буквы" tabindex="0">a..z</div>
+              <div class="symbols symbols-settings__numbers symbols-settings__numbers_active" aria-label="Арабские цифры" tabindex="0">0..9</div>
+              <div class="symbols symbols-settings__special-symbols" aria-label="Специальные символы" tabindex="0">/..@</div>
+            </div>
+            <!-- /.symbols-settings -->
+          </div>
+          <div class="attribute">
+            <p class="attribute__sub-title attribute__sub-title_inline">Повторение символов:</p>
+            <input class="checkbox-repeat-symbols" type="checkbox" name="checkbox-repeat-symbols" aria-label="Повторение символов">
+          </div>
+          <!-- /.attribute-block -->
+        </div>
+          <!-- /.settings-content -->
+      </div>
+      <!-- /.content-wrapper -->
+    </div>
+    <!-- /.modal-settings-wrapper -->
+  </section>
+  <!-- /.settuings-modul -->
+
+  <section class="error-message error-message__transparent">
+    <div class="error-body">
+      <i class="fas fa-exclamation-circle error-body__error-img"></i>
+      <p class="error-body__error-text"></p>
+    </div>
+    <!-- /.error-wrapper -->
+  </section>
+  <!-- /.error-message -->
+  
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/generator.js" defer></script>
+</body>
+</html>

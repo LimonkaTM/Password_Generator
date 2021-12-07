@@ -1,0 +1,27 @@
+@import ".mixins";
+
+@import ".colors";
+
+* {
+  box-sizing: border-box;
+  
+  &::before, 
+  &::after{
+    box-sizing: border-box;
+  }
+}
+body {
+  height: 100vh;
+  font-family: 'Outfit', sans-serif;
+}
+
+
+@import "blocks/.main";
+
+@import "blocks/.form";
+
+@import "blocks/.modal-settings";
+
+@import "blocks/.error-message";
+
+@import ".mediaqueries";

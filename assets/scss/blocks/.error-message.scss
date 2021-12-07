@@ -1,0 +1,67 @@
+.error-message {
+  position: absolute;
+  top: 10.5rem;
+  display: flex;
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+  transition: 1s opacity, 1s visibility ease-in-out;
+}
+.error-body {
+  display: flex;
+  align-items: center;
+  width: 32%;
+  min-width: 440px;
+  margin: 0 auto;
+  padding: 1em;
+  background-color: #fff;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, .14);
+  box-shadow: 10px 10px 15px rgba(255, 0, 0, 0.14);
+  border-radius: 12px;
+
+  .error-body__error-img {
+    margin-right: 3%;
+    font-size: 2em;
+    color: red;
+  }
+
+  .error-body__error-text {
+    display: inline;
+    margin: 0;  
+
+    span{
+      font-weight: bold;
+    }
+  }
+}
+
+.error-message__transparent {
+  opacity: 0;
+  visibility: hidden;
+}
+
+// .error-message__visible {
+//   animation: showBlock .5s linear forwards;
+// }
+
+// .error-message__hidden {
+//   animation: hideBlock .5s linear forwards;
+// }
+
+// @keyframes showBlock {
+//   0% {
+//     opacity: 0;
+//   }
+//   100% {
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes hideBlock {
+//   0% {
+//     opacity: 1;
+//   }
+//   100% {
+//     opacity: 0;
+//   }
+// }

@@ -1,0 +1,107 @@
+.form {
+  margin-top: 25vh;
+  background-color: transparent;
+  
+  .form__wrapper-shadow {
+    position: relative;
+    min-width: 320px;
+    width: 32%;
+    margin: auto;
+    background-color: transparent;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 10px 10px 25px rgb(185, 185, 185);
+
+    .btn:hover {
+      color: cornflowerblue;
+    }
+  }
+  .form__input {
+    height: 45px;
+    width: 100%;
+    padding: .5em;
+    padding-right: 4.7em;
+    font-size: 1.3em;
+    border: none;
+    border-radius: 0 10px 10px 0;
+
+    &:focus,
+    &:active {
+      outline-color: #719eff;
+    }
+  }
+  .btn-block {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    height: 100%;
+    width: 99px;
+
+    .btn {
+      flex-grow: 1;
+      height: 100%;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      .icon{
+        width: 16px;
+        height: 16px;
+      }
+    }
+    .form__btn-clear-input {
+      visibility: hidden;
+    }
+    .form__btn-clear-input .icon {
+      font-size: 0.75em;
+      color: #acacac;
+    }
+    .form__btn-generagte {
+      padding-right: 10px;
+      border-radius: 0 10px 10px 0;
+    }
+  }
+
+  .btn {
+    font-size: 1.3em;
+
+    &:focus,
+    &:active{
+      outline-color: #719eff;
+    }
+  }
+
+  .form__btn-settings {
+    position: absolute;
+    left: -36px;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}
+
+[data-title] {
+  position: relative
+}
+[data-title]:after {
+  content: attr(data-title);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+  position: absolute;
+  top: 2.8em;
+  left: 30%;
+  padding: 4px 8px;
+  font-size: .75em;
+  color: rgb(216, 216, 216);
+  background-color: rgb(41, 41, 46);
+  border-radius: 3px;
+  box-shadow: 0 0 5px #ccc;
+}
+[data-title]:hover:after {
+  opacity: 1;
+  visibility: visible;
+  transition: all .4s ease-out .5s;
+}
