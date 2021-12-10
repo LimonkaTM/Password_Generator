@@ -12,8 +12,6 @@ let activeAlphabet = '';
 let password = '';
 let errorMessage = '<span>Ошибка:</span> Не выбран алфавит генератора пароля!';
 
-// errorText.innerHTML = errorMessage;
-
 function randomizePassword (passwordAlphabet) {
   const tempObjSettings = JSON.parse(localStorage.getItem('settingsPassGeneration'));
 
@@ -39,10 +37,10 @@ function randomizePassword (passwordAlphabet) {
   if (!tempObjSettings.attiributeStatus.includes(true) && tempObjSettings.symbolsRepeat) {
     errorText.innerHTML = errorMessage;
     
-    modalErrorMessage.classList.remove('error-message__transparent')
+    modalErrorMessage.classList.remove('error-message_transparent')
     
     setTimeout(() => {
-      modalErrorMessage.classList.add('error-message__transparent')
+      modalErrorMessage.classList.add('error-message_transparent')
     }, 8000)
 
     return
@@ -56,10 +54,10 @@ function randomizePassword (passwordAlphabet) {
         errorText.innerHTML = '';
         errorText.innerHTML = errorMessage;
         
-        modalErrorMessage.classList.remove('error-message__transparent')
+        modalErrorMessage.classList.remove('error-message_transparent')
         
         setTimeout(() => {
-          modalErrorMessage.classList.add('error-message__transparent')
+          modalErrorMessage.classList.add('error-message_transparent')
         }, 8000)
 
         return
@@ -68,10 +66,10 @@ function randomizePassword (passwordAlphabet) {
         errorText.innerHTML = '';
         errorText.innerHTML = errorMessage;
         
-        modalErrorMessage.classList.remove('error-message__transparent')
+        modalErrorMessage.classList.remove('error-message_transparent')
         
         setTimeout(() => {
-          modalErrorMessage.classList.add('error-message__transparent')
+          modalErrorMessage.classList.add('error-message_transparent')
         }, 8000)
 
         return
@@ -80,10 +78,10 @@ function randomizePassword (passwordAlphabet) {
         errorText.innerHTML = '';
         errorText.innerHTML = errorMessage;
 
-        modalErrorMessage.classList.remove('error-message__transparent')
+        modalErrorMessage.classList.remove('error-message_transparent')
         
         setTimeout(() => {
-          modalErrorMessage.classList.add('error-message__transparent')
+          modalErrorMessage.classList.add('error-message_transparent')
         }, 8000)
 
         return
@@ -115,7 +113,17 @@ function randomizePassword (passwordAlphabet) {
 
 btnGeneratePass.addEventListener('click', (e) => {
   e.preventDefault()
-  
+
   randomizePassword(passwordAlphabet)
   changeVisibleBtnClearInput(formInput, btnClearInput)
+
+  if (formInput.value != '') {
+    eventBodyMessage.innerHTML = 'Пароль сгенерирован';
+
+    blockEvent.classList.remove('block-event_transparent')
+      
+    setTimeout(() => {
+      blockEvent.classList.add('block-event_transparent')
+    }, 2000)
+  }
 })

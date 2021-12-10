@@ -1,0 +1,36 @@
+.block-event {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: .3s opacity, .3s visibility ease-in-out;
+  transition: .3s opacity, .3s visibility ease-in-out;
+}
+
+.event-body {
+  padding: 1em;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 1em;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.14);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.14);
+}
+
+.event-body .event-body__message {
+  margin: 0;
+}
+
+.block-event_transparent {
+  opacity: 0;
+  visibility: hidden;
+}

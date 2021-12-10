@@ -5,15 +5,12 @@
   right: 0;
   left: 0;
   z-index: 1000;
-  // display: none;
   margin: auto;
   max-width: 30%;
   min-width: 330px;
   opacity: 1;
   visibility: visible;
   transition: .5s opacity, .5s visibility ease-in-out;
-
-  
 
   *:focus,
   *:active{
@@ -125,7 +122,7 @@
   }
 }
 
-.modal-settings__transparent {
+.modal-settings_transparent {
   opacity: 0; 
   visibility: hidden;
 }
