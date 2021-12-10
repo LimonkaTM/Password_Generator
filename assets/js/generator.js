@@ -35,8 +35,9 @@ function randomizePassword (passwordAlphabet) {
   };
 
   if (!tempObjSettings.attiributeStatus.includes(true) && tempObjSettings.symbolsRepeat) {
+    errorMessage = '<span>Ошибка:</span> Не выбран алфавит генератора пароля!';
     errorText.innerHTML = errorMessage;
-    
+
     modalErrorMessage.classList.remove('error-message_transparent')
     
     setTimeout(() => {
@@ -51,6 +52,7 @@ function randomizePassword (passwordAlphabet) {
       randomIndex = getRandomNumber(activeAlphabet.length);
 
       if (!tempObjSettings.attiributeStatus.includes(true)) {
+        errorMessage = '<span>Ошибка:</span> Не выбран алфавит генератора пароля!';
         errorText.innerHTML = '';
         errorText.innerHTML = errorMessage;
         
