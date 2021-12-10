@@ -63,18 +63,6 @@ function randomizePassword (passwordAlphabet) {
         }, 8000)
 
         return
-      } else if (activeAlphabet.length < +tempObjSettings.passwordLength && !tempObjSettings.symbolsRepeat) {
-        errorMessage = '<span>Ошибка:</span> Длинна алфавита генератора паролей меньше длинны генерируемого пароля.';
-        errorText.innerHTML = '';
-        errorText.innerHTML = errorMessage;
-        
-        modalErrorMessage.classList.remove('error-message_transparent')
-        
-        setTimeout(() => {
-          modalErrorMessage.classList.add('error-message_transparent')
-        }, 8000)
-
-        return
       } else if (tempObjSettings.passwordLength <= 0 || tempObjSettings.passwordLength == '') {
         errorMessage = '<span>Ошибка:</span> Длинна пароля должна быть больше нуля.';
         errorText.innerHTML = '';
@@ -87,7 +75,19 @@ function randomizePassword (passwordAlphabet) {
         }, 8000)
 
         return
-      } else {
+      } else if (activeAlphabet.length < +tempObjSettings.passwordLength && !tempObjSettings.symbolsRepeat) {
+        errorMessage = '<span>Ошибка:</span> Длинна алфавита генератора паролей меньше длинны генерируемого пароля.';
+        errorText.innerHTML = '';
+        errorText.innerHTML = errorMessage;
+        
+        modalErrorMessage.classList.remove('error-message_transparent')
+        
+        setTimeout(() => {
+          modalErrorMessage.classList.add('error-message_transparent')
+        }, 8000)
+
+        return
+      } else  {
         checkAllPasswordSymbols()
       }
     }
