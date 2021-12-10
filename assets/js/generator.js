@@ -73,7 +73,7 @@ function randomizePassword (passwordAlphabet) {
         }, 8000)
 
         return
-      } else if (tempObjSettings.passwordLength <= 0) {
+      } else if (tempObjSettings.passwordLength <= 0 || tempObjSettings.passwordLength == '') {
         errorMessage = '<span>Ошибка:</span> Длинна пароля должна быть больше нуля.';
         errorText.innerHTML = '';
         errorText.innerHTML = errorMessage;
