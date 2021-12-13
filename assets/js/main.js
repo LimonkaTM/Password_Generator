@@ -24,6 +24,7 @@ const passwordAlphabet = [
   `0123456789`, 
   `,.;:?'!@|/\\_~*+-\`)(}{<>[]#%&$^="`
 ];
+// let activeAlphabet = '';
 let activeAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 let password = '';
 
@@ -142,35 +143,36 @@ btnCloseModalSettings.addEventListener('click', (e) => {
 
   changeObjSettingPassGeneration(settingsGeneration, attributePasswordLength, getArrAttributeStatus(attributeArrSymbols), attributeSymbolsRepeat)
 
-  //* Цикл обработки ошибок
+  //* Обработка ошибок
 
-  do {
-    if (settingsGeneration.passwordLength <= 0 || settingsGeneration.passwordLength == '' || settingsGeneration.passwordLength > 32) {
-      showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Недопустимое значение длинны пароля!', 8000)
-      break
-    } else if (!settingsGeneration.attiributeStatus.includes(true)) {
-      showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Не выбран алфавит генератора пароля!', 8000)
-      break
-    } else if (activeAlphabet.length < +settingsGeneration.passwordLength && !settingsGeneration.symbolsRepeat) {
-      showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Длинна алфавита генерации меньше указанной длинны пароля!', 8000)
-      break
-    } else {
-      errorStatus = false;
-    }
+  if (settingsGeneration.passwordLength <= 0 || settingsGeneration.passwordLength == '' || settingsGeneration.passwordLength > 32) {
+    showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Недопустимое значение длинны пароля!', 8000)
+    activeAlphabet = '';
+    errorStatus = true;
+    return
+  } else if (!settingsGeneration.attiributeStatus.includes(true)) {
+    showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Не выбран алфавит генератора пароля!', 8000)
+    errorStatus = true;
+    activeAlphabet = '';
+    return
+  } else if (activeAlphabet.length < +settingsGeneration.passwordLength && !settingsGeneration.symbolsRepeat) {
+    showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Длинна алфавита генерации меньше указанной длинны пароля!', 8000)
+    errorStatus = true;
+    activeAlphabet = '';
+    return
+  } else {
+    errorStatus = false;
+  }
 
-    if (!errorStatus) {
-      closeModalSettings(main, modalSettings)
-      
-      main.style.overflow = '';
+  if (!errorStatus) {
+    closeModalSettings(main, modalSettings)
+    
+    main.style.overflow = '';
 
-      showErrorOrLogMessage(blockEvent, eventBodyMessage, 'block-event_transparent', 'Настройки сохранены', 2000)
-    }
+    showErrorOrLogMessage(blockEvent, eventBodyMessage, 'block-event_transparent', 'Настройки сохранены', 2000)
 
-  } while (errorStatus == true)
-
-  // *
-
-  localStorage.setItem('settingsPassGeneration', JSON.stringify(settingsGeneration))
+    localStorage.setItem('settingsPassGeneration', JSON.stringify(settingsGeneration))
+  }
 })
 
 formInput.addEventListener('input', () => {
@@ -179,6 +181,8 @@ formInput.addEventListener('input', () => {
 
 btnClearInput.addEventListener('click', (e) => {
   e.preventDefault()
+  
+  formInput.value = '';
 
   changeVisibleBtnClearInput(formInput, btnClearInput)
   showErrorOrLogMessage(blockEvent, eventBodyMessage, 'block-event_transparent', 'Очищено', 2000)
