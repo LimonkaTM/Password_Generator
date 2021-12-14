@@ -1,0 +1,27 @@
+.block-event {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: .3s opacity, .3s visibility ease-in-out;
+}
+.event-body {
+  padding: 1em;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border-radius: 1em;
+  box-shadow: 0 0 15px rgba(0, 0, 0, .14);
+
+  .event-body__message {
+    margin: 0;
+  }
+}
+
+.block-event_transparent {
+  opacity: 0; 
+  visibility: hidden;
+}

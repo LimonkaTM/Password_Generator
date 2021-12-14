@@ -11,6 +11,9 @@ const attributePasswordLength = document.querySelector('.block-attributes__input
 const attributeArrSymbols = document.querySelectorAll('.symbols');
 const attributeSymbolsRepeat = document.querySelector('.checkbox-repeat-symbols');
 
+const blockEvent = document.querySelector('.block-event');
+const eventBodyMessage = document.querySelector('.event-body__message');
+
 const defaultPasswordSettings = {
   passwordLength: 12,
   attiributeStatus: [true, true, true, false],
@@ -81,30 +84,46 @@ const changeVisibleBtnClearInput = (input, btn) => {
 
 const openModalSettings = (parentAddShadow, modal) => {
   parentAddShadow.classList.add('main-bg-shadow');
-  modal.classList.remove('modal-settings__transparent');
-  // modal.style.display = 'block';
+  modal.classList.remove('modal-settings_transparent');
 };
 
 const closeModalSettings = (parentRemoveShadow, modal) => {
-  // setTimeout(() => {
-  //   parentRemoveShadow.classList.remove('main-bg-shadow')
-  // }, 500)
   parentRemoveShadow.classList.remove('main-bg-shadow')
-  modal.classList.add('modal-settings__transparent');
-  // modal.style.display = 'none';
+  modal.classList.add('modal-settings_transparent');
 };
 
 btnSettings.addEventListener('click', (e) => {
   e.preventDefault()
 
+  eventBodyMessage.innerHTML = 'Открыты настройки генерации';
+
+  blockEvent.classList.remove('block-event_transparent')
+    
+  setTimeout(() => {
+    blockEvent.classList.add('block-event_transparent')
+  }, 2000)
+
   openModalSettings(main, modalSettings)
-  console.log(settingsGeneration);
+
+  main.style.overflow = 'hidden';
 });
 
-btnCloseModalSettings.addEventListener('click', () => {
+btnCloseModalSettings.addEventListener('click', (e) => {
+  e.preventDefault()
+
   closeModalSettings(main, modalSettings)
   changeObjSettingPassGeneration(settingsGeneration, attributePasswordLength, getArrAttributeStatus(attributeArrSymbols), attributeSymbolsRepeat)
-  
+
+  main.style.overflow = '';
+
+  eventBodyMessage.innerHTML = 'Настройки сохранены';
+
+  blockEvent.classList.remove('block-event_transparent')
+    
+  setTimeout(() => {
+    blockEvent.classList.add('block-event_transparent')
+  }, 2000)
+
   localStorage.setItem('settingsPassGeneration', JSON.stringify(settingsGeneration))
 })
 
@@ -114,14 +133,31 @@ formInput.addEventListener('input', () => {
 
 btnClearInput.addEventListener('click', (e) => {
   e.preventDefault()
+
   formInput.value = '';
+  eventBodyMessage.innerHTML = 'Поле очищено';
+
+  blockEvent.classList.remove('block-event_transparent')
+    
+  setTimeout(() => {
+    blockEvent.classList.add('block-event_transparent')
+  }, 2000)
+  
   changeVisibleBtnClearInput(formInput, btnClearInput)
 })
 
 btnCopy.addEventListener('click', (e) => {
   e.preventDefault()
-  setClipboardValue(formInput.value)
+
+  eventBodyMessage.innerHTML = 'Скопировано';
+
+  blockEvent.classList.remove('block-event_transparent')
+    
+  setTimeout(() => {
+    blockEvent.classList.add('block-event_transparent')
+  }, 2000)
   
+  setClipboardValue(formInput.value)
 })
 
 setToggleAttributeArr(attributeArrSymbols)
