@@ -11,11 +11,34 @@ const attributePasswordLength = document.querySelector('.block-attributes__input
 const attributeArrSymbols = document.querySelectorAll('.symbols');
 const attributeSymbolsRepeat = document.querySelector('.checkbox-repeat-symbols');
 
+const modalErrorMessage = document.querySelector('.error-message');
+const errorMessage = document.querySelector('.error-body__error-text');
+let errorStatus = false;
+
+const blockEvent = document.querySelector('.block-event');
+const eventBodyMessage = document.querySelector('.event-body__message');
+
+const passwordAlphabet = [
+  `ABCDEFGHIJKLMNOPQRSTUVWXYZ`, 
+  `abcdefghijklmnopqrstuvwxyz`, 
+  `0123456789`, 
+  `,.;:?'!@|/\\_~*+-\`)(}{<>[]#%&$^="`
+];
+
+let activeAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+let password = '';
+
 const defaultPasswordSettings = {
   passwordLength: 12,
   attiributeStatus: [true, true, true, false],
   symbolsRepeat: true,
 }
+
+const sessionStorageObj = {
+  openSettingsWindow: false,
+};
+
+//* Проверка на наличие LocalStorage
 
 const settingsGeneration = localStorage.getItem('settingsPassGeneration') ? 
   JSON.parse(localStorage.getItem('settingsPassGeneration')) : defaultPasswordSettings;
@@ -23,6 +46,30 @@ const settingsGeneration = localStorage.getItem('settingsPassGeneration') ?
 if (!localStorage.getItem('settingsPassGeneration')) {
   localStorage.setItem('settingsPassGeneration', JSON.stringify(defaultPasswordSettings))
 }
+
+//*
+
+//* Проверка на наличие SesionStorage
+
+const sessionSettings = sessionStorage.getItem('mainSessionSettings') ? 
+  JSON.parse(sessionStorage.getItem('mainSessionSettings')) : sessionStorageObj;
+
+if (!sessionStorage.getItem('mainSessionSettings')) {
+  sessionStorage.setItem('mainSessionSettings', JSON.stringify(sessionStorageObj))
+}
+
+//*
+
+const showErrorOrLogMessage = (parentBlock, childBlock, styleCalss,textMessage, showTime) => {
+  childBlock.innerHTML = '';
+  childBlock.innerHTML = textMessage;
+
+  parentBlock.classList.remove(styleCalss) 
+
+  setTimeout(() => {
+    parentBlock.classList.add(styleCalss)
+  }, showTime)
+};
 
 const changeStartPasswordSettings = (attribute1, attribute2, attribute3) => {
   const tempObjSettings = JSON.parse(localStorage.getItem('settingsPassGeneration'));
@@ -46,15 +93,22 @@ const getArrAttributeStatus = (arrAttribute) => {
   arrAttributeStatus = [];
 
   for (let i = 0; i < arrAttribute.length; i++) {
+    if (arrAttribute[i].classList.contains(`${arrAttribute[i].classList[1]}_active`)) {
+      activeAlphabet += passwordAlphabet[i];
+    }
     arrAttributeStatus.push(arrAttribute[i].classList.contains(`${arrAttribute[i].classList[1]}_active`));
   }
 
   return arrAttributeStatus
 };
 
+console.log(attributeArrSymbols);
+console.log(getArrAttributeStatus(attributeArrSymbols));
+console.log(activeAlphabet);
+
 const changeObjSettingPassGeneration = (obj, attribute1, attribute2, attribute3) => {
   obj.passwordLength = attribute1.value;
-  obj.attiributeStatus = attribute2
+  obj.attiributeStatus = attribute2;
   obj.symbolsRepeat = attribute3.checked;
 };
 
@@ -67,8 +121,10 @@ const setToggleAttributeArr = (arrItems) => {
   }
 };
 
-const setClipboardValue = (text) => {
-  navigator.clipboard.writeText(text.trim())
+const setClipboardValue = (input) => {
+  navigator.clipboard.writeText(input.value.trim())
+  input.focus()
+  input.select()
 };
 
 const changeVisibleBtnClearInput = (input, btn) => {
@@ -80,32 +136,66 @@ const changeVisibleBtnClearInput = (input, btn) => {
 };
 
 const openModalSettings = (parentAddShadow, modal) => {
+  activeAlphabet = '';
   parentAddShadow.classList.add('main-bg-shadow');
-  modal.classList.remove('modal-settings__transparent');
-  // modal.style.display = 'block';
+  modal.classList.remove('modal-settings_transparent');
+
+  sessionSettings.openSettingsWindow = true;
+  sessionStorage.setItem('mainSessionSettings', JSON.stringify(sessionSettings))
 };
 
 const closeModalSettings = (parentRemoveShadow, modal) => {
-  // setTimeout(() => {
-  //   parentRemoveShadow.classList.remove('main-bg-shadow')
-  // }, 500)
   parentRemoveShadow.classList.remove('main-bg-shadow')
-  modal.classList.add('modal-settings__transparent');
-  // modal.style.display = 'none';
+  modal.classList.add('modal-settings_transparent');
+
+  sessionSettings.openSettingsWindow = false;
+  sessionStorage.setItem('mainSessionSettings', JSON.stringify(sessionSettings))
 };
 
 btnSettings.addEventListener('click', (e) => {
   e.preventDefault()
 
   openModalSettings(main, modalSettings)
-  console.log(settingsGeneration);
+  showErrorOrLogMessage(blockEvent, eventBodyMessage, 'block-event_transparent', 'Открыты настройки генерации', 2000)
+
+  main.style.overflow = 'hidden';
 });
 
-btnCloseModalSettings.addEventListener('click', () => {
-  closeModalSettings(main, modalSettings)
+btnCloseModalSettings.addEventListener('click', (e) => {
+  e.preventDefault()
+
   changeObjSettingPassGeneration(settingsGeneration, attributePasswordLength, getArrAttributeStatus(attributeArrSymbols), attributeSymbolsRepeat)
-  
-  localStorage.setItem('settingsPassGeneration', JSON.stringify(settingsGeneration))
+
+  //* Обработка ошибок
+
+  if (settingsGeneration.passwordLength <= 0 || settingsGeneration.passwordLength == '' || settingsGeneration.passwordLength > 32) {
+    showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Недопустимое значение длинны пароля!', 8000)
+    activeAlphabet = '';
+    errorStatus = true;
+    return
+  } else if (!settingsGeneration.attiributeStatus.includes(true)) {
+    showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Не выбран алфавит генератора пароля!', 8000)
+    errorStatus = true;
+    activeAlphabet = '';
+    return
+  } else if (activeAlphabet.length < +settingsGeneration.passwordLength && !settingsGeneration.symbolsRepeat) {
+    showErrorOrLogMessage(modalErrorMessage, errorMessage, 'error-message_transparent', '<span>Ошибка:</span> Длинна алфавита генерации меньше указанной длинны пароля!', 8000)
+    errorStatus = true;
+    activeAlphabet = '';
+    return
+  } else {
+    errorStatus = false;
+  }
+
+  if (!errorStatus) {
+    closeModalSettings(main, modalSettings)
+    
+    main.style.overflow = '';
+
+    showErrorOrLogMessage(blockEvent, eventBodyMessage, 'block-event_transparent', 'Настройки сохранены', 2000)
+
+    localStorage.setItem('settingsPassGeneration', JSON.stringify(settingsGeneration))
+  }
 })
 
 formInput.addEventListener('input', () => {
@@ -114,14 +204,28 @@ formInput.addEventListener('input', () => {
 
 btnClearInput.addEventListener('click', (e) => {
   e.preventDefault()
+  
   formInput.value = '';
+
   changeVisibleBtnClearInput(formInput, btnClearInput)
+  showErrorOrLogMessage(blockEvent, eventBodyMessage, 'block-event_transparent', 'Очищено', 2000)
 })
 
 btnCopy.addEventListener('click', (e) => {
   e.preventDefault()
-  setClipboardValue(formInput.value)
-  
+
+  setClipboardValue(formInput)
+  showErrorOrLogMessage(blockEvent, eventBodyMessage, 'block-event_transparent', 'Скопировано', 2000)
 })
 
 setToggleAttributeArr(attributeArrSymbols)
+
+//* при обновлении не будет пропадать окно настройки генерации
+
+if (JSON.parse(sessionStorage.getItem('mainSessionSettings')).openSettingsWindow) {
+  main.classList.add('main-bg-shadow');
+  modalSettings.classList.remove('modal-settings_transparent');
+} else {
+  main.classList.remove('main-bg-shadow')
+  modalSettings.classList.add('modal-settings_transparent');
+}

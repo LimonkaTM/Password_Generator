@@ -1,6 +1,7 @@
 .error-message {
   position: absolute;
-  top: 10.5rem;
+  bottom: 1.5rem;
+  z-index: 99999;
   display: flex;
   width: 100%;
   opacity: 1;
@@ -11,7 +12,7 @@
   display: flex;
   align-items: center;
   width: 32%;
-  min-width: 440px;
+  min-width: 220px;
   margin: 0 auto;
   padding: 1em;
   background-color: #fff;
@@ -35,33 +36,7 @@
   }
 }
 
-.error-message__transparent {
+.error-message_transparent {
   opacity: 0;
   visibility: hidden;
 }
-
-// .error-message__visible {
-//   animation: showBlock .5s linear forwards;
-// }
-
-// .error-message__hidden {
-//   animation: hideBlock .5s linear forwards;
-// }
-
-// @keyframes showBlock {
-//   0% {
-//     opacity: 0;
-//   }
-//   100% {
-//     opacity: 1;
-//   }
-// }
-
-// @keyframes hideBlock {
-//   0% {
-//     opacity: 1;
-//   }
-//   100% {
-//     opacity: 0;
-//   }
-// }
