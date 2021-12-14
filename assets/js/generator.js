@@ -30,7 +30,6 @@ function randomizePassword () {
     } else {
       getNoneRepeatSymbol()
     }
-    
   };
 
   getPassword(activeAlphabet)

@@ -24,7 +24,7 @@ const passwordAlphabet = [
   `0123456789`, 
   `,.;:?'!@|/\\_~*+-\`)(}{<>[]#%&$^="`
 ];
-// let activeAlphabet = '';
+
 let activeAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 let password = '';
 
@@ -34,6 +34,10 @@ const defaultPasswordSettings = {
   symbolsRepeat: true,
 }
 
+const sessionStorageObj = {
+  openSettingsWindow: false,
+};
+
 //* Проверка на наличие LocalStorage
 
 const settingsGeneration = localStorage.getItem('settingsPassGeneration') ? 
@@ -41,6 +45,17 @@ const settingsGeneration = localStorage.getItem('settingsPassGeneration') ?
 
 if (!localStorage.getItem('settingsPassGeneration')) {
   localStorage.setItem('settingsPassGeneration', JSON.stringify(defaultPasswordSettings))
+}
+
+//*
+
+//* Проверка на наличие SesionStorage
+
+const sessionSettings = sessionStorage.getItem('mainSessionSettings') ? 
+  JSON.parse(sessionStorage.getItem('mainSessionSettings')) : sessionStorageObj;
+
+if (!sessionStorage.getItem('mainSessionSettings')) {
+  sessionStorage.setItem('mainSessionSettings', JSON.stringify(sessionStorageObj))
 }
 
 //*
@@ -106,8 +121,10 @@ const setToggleAttributeArr = (arrItems) => {
   }
 };
 
-const setClipboardValue = (text) => {
-  navigator.clipboard.writeText(text.trim())
+const setClipboardValue = (input) => {
+  navigator.clipboard.writeText(input.value.trim())
+  input.focus()
+  input.select()
 };
 
 const changeVisibleBtnClearInput = (input, btn) => {
@@ -122,11 +139,17 @@ const openModalSettings = (parentAddShadow, modal) => {
   activeAlphabet = '';
   parentAddShadow.classList.add('main-bg-shadow');
   modal.classList.remove('modal-settings_transparent');
+
+  sessionSettings.openSettingsWindow = true;
+  sessionStorage.setItem('mainSessionSettings', JSON.stringify(sessionSettings))
 };
 
 const closeModalSettings = (parentRemoveShadow, modal) => {
   parentRemoveShadow.classList.remove('main-bg-shadow')
   modal.classList.add('modal-settings_transparent');
+
+  sessionSettings.openSettingsWindow = false;
+  sessionStorage.setItem('mainSessionSettings', JSON.stringify(sessionSettings))
 };
 
 btnSettings.addEventListener('click', (e) => {
@@ -191,8 +214,18 @@ btnClearInput.addEventListener('click', (e) => {
 btnCopy.addEventListener('click', (e) => {
   e.preventDefault()
 
-  setClipboardValue(formInput.value)
+  setClipboardValue(formInput)
   showErrorOrLogMessage(blockEvent, eventBodyMessage, 'block-event_transparent', 'Скопировано', 2000)
 })
 
 setToggleAttributeArr(attributeArrSymbols)
+
+//* при обновлении не будет пропадать окно настройки генерации
+
+if (JSON.parse(sessionStorage.getItem('mainSessionSettings')).openSettingsWindow) {
+  main.classList.add('main-bg-shadow');
+  modalSettings.classList.remove('modal-settings_transparent');
+} else {
+  main.classList.remove('main-bg-shadow')
+  modalSettings.classList.add('modal-settings_transparent');
+}
